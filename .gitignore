@@ -1,0 +1,13 @@
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+*.rds
+*.csv
+*.nii
+*.nii.gz
+snf/
+snf_inputs/
+static/
+simulated_project/
+.DS_Store
