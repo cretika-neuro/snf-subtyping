@@ -17,9 +17,9 @@ The pipeline uses [`metasnf`](https://branchlab.github.io/metasnf/) to:
 
 ```mermaid
 flowchart TD
-    A["01 Assemble inputs<br/>rsfMRI + genetics + clinical"] --> B["02 Batch SNF<br/>500 hyperparameter settings"]
-    B --> C["03 Meta clustering<br/>representative solutions"]
-    C --> D["04 Stability<br/>100 subsamples (80%)"]
+    A["01 Assemble and residualize inputs<br/>rsfMRI + genetics + clinical"] --> B["02 Batch SNF<br/>500 hyperparameter settings"]
+    B --> C["03 Metacluster<br/>representative solutions"]
+    C --> D["04 Subsampling<br/>stability: 100 subsamples (80%)"]
     D --> E["05 Top solution<br/>co-clustering + ARI"]
     E --> F["06 Feature analysis<br/>linear models, FDR"]
 ```
@@ -28,11 +28,11 @@ flowchart TD
 
 ```
 scripts/
-  01_input.R              load and align modality datasheets, build data_list
+  01_input.R              load and align residualized modality datasheets, build data_list
   02_metasnf.R            generate SNF config and run batch SNF
-  03_repsol.R             metaclusters, silhouettes, representative solutions
-  04_subsample.R          subsampling: solution (ARI) and subject (co-clustering) stability
-  05_toprep.R             identify and summarize the top solution
+  03_repsol.R             metacluster and identify representative solutions
+  04_subsample.R          subsampling model selection: solution (ARI) and subject (co-clustering) stability
+  05_toprep.R             select the top solution
   06_analysis_features.R  demographics and per-feature linear models across clusters/groups
 data-raw/
   simulate_data.R         generates synthetic data with the expected structure
@@ -57,7 +57,7 @@ Then, for each script in `scripts/`, fill in the placeholders (marked `xxx` or l
 
 Two steps need a human decision:
 
-- **`03_repsol.R`:** inspect the interactive heatmap with `shiny_annotator()` and set `split_vec`.
+- **`03_repsol.R`:** inspect the interactive heatmap with `shiny_annotator()` and set `split_vec` to metacluster.
 - **`05_toprep.R` and `06_analysis_features.R`:** after `05_toprep.R` prints the top solution, enter its row, metacluster letter, and solution number in the marked block (it appears in both scripts).
 
 ## Using your own data
@@ -77,18 +77,12 @@ See `data-raw/simulate_data.R` for exact column names. Participant IDs to exclud
 
 ## Status
 
-Scripts 01-06 are included. Figure generation is not part of this repository yet.
-
-## Dependencies
-
-R >= 4.1.
-- **Core (01-05):** `metasnf`, `SNFtool`, `dplyr`, `tidyr`, `readr`, `stringr`, `purrr`, `ggplot2`, `gridExtra`, `ComplexHeatmap`, `InteractiveComplexHeatmap`.
-- **Analysis (06):** `tidyverse`, `broom.mixed`, `emmeans`, `rstatix`, `dunn.test`, `ggpubr`, `effectsize`, `plotly`, `MASS`, `lme4`, `lmerTest`, `MuMIn`, `caret`, `car`, `readxl`.
+Scripts 01-06 are included. 
 
 ## References and acknowledgements
 
 - Wang, B. et al. (2014). Similarity network fusion for aggregating data types on a genomic scale. *Nature Methods*. doi:10.1038/nmeth.2810
 - Caruana, R. et al. (2006). Meta clustering. *IEEE ICDM*.
-- Velayudhan, P. S. et al. `metasnf`: Meta Clustering with Similarity Network Fusion (R package, GPL-3). Cite with `citation("metasnf")`.
+- Velayudhan, P. S. et al. `metasnf`: Meta Clustering with Similarity Network Fusion (R package, GPL-3). 
 
-The pipeline structure follows the `metasnf` documentation and vignettes; the stability summaries, top-solution selection, and downstream statistics were developed for this project.
+The pipeline structure follows the `metasnf` documentation and vignettes; the generated figures, stability summaries and downstream statistics were developed for this project.
