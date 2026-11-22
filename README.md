@@ -4,13 +4,9 @@ Multimodal subtyping with similarity network fusion (SNF) and meta clustering.
 
 Original project aimed to parse autism heterogeneity across scales by integrating resting-state fMRI connectivity, polygenic scores, and clinical measures. This pipeline is customizable to take in any dataframes as inputs, perform SNF, model selection, compare cluster demographics, and perform feature attribution. 
 
-Original data from ACE Network and UCLA ACE Center studies as part of the GENDAAR Consortium.
-
-This repository contains the analysis code only. No participant data are included.
-
 ## Overview
 
-The pipeline uses [`metasnf`](https://branchlab.github.io/metasnf/) to:
+The pipeline uses [`metasnf`](https://branchlab.github.io/metasnf/) (Velayudhan, P. S. et al.) to:
 
 1. Build a data list of three modalities (rsfMRI network connectivity, genetics, clinical).
 2. Generate hundreds of SNF cluster solutions across a grid of hyperparameters.
