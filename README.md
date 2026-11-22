@@ -1,6 +1,7 @@
-# snf-asd-subtyping
+# snf-subtyping
 
-Multimodal subtyping of autism heterogeneity with similarity network fusion (SNF) and meta clustering, integrating resting-state fMRI connectivity, polygenic scores, and clinical measures
+Multimodal subtyping with similarity network fusion (SNF) and meta clustering.
+Original project aimed to parse autism heterogeneity across scales by integrating resting-state fMRI connectivity, polygenic scores, and clinical measures
 Original data from ACE Network and UCLA ACE Center studies as part of the GENDAAR Consortium.
 
 This repository contains the analysis code only. No participant data are included.
